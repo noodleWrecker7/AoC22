@@ -15,6 +15,18 @@ public class Day4
 
 }
 
+class Range
+{
+    int start;
+    int end;
+
+    public Range(int start, int end)
+    {
+        this.start = start;
+        this.end = end;
+    }
+}
+
 class D4Part1
 {
 
@@ -25,17 +37,6 @@ class D4Part1
         this.fr = fr;
     }
 
-    class Range
-    {
-        int start;
-        int end;
-
-        public Range(int start, int end)
-        {
-            this.start = start;
-            this.end = end;
-        }
-    }
 
     public int solve()
     {
@@ -76,6 +77,27 @@ class D4Part2
 
     public int solve()
     {
-        return 0;
+        int overlaps = 0;
+        String line;
+        try
+        {
+            while ((line = fr.readLine()) != null)
+            {
+                String[] parts = line.split(",");
+                // I don't like how obtuse this is, but I don't care
+                String[][] ranges = new String[][]{parts[0].split("-"), parts[1].split("-")};
+                Range elf1 = new Range(Integer.parseInt(ranges[0][0]), Integer.parseInt(ranges[0][1]));
+                Range elf2 = new Range(Integer.parseInt(ranges[1][0]), Integer.parseInt(ranges[1][1]));
+
+                if (elf1.start <= elf2.end && elf1.end >= elf2.start)
+                {
+                    overlaps++;
+                }
+            }
+        } catch (IOException e)
+        {
+            System.out.println("Uh Oh!");
+        }
+        return overlaps;
     }
 }
