@@ -9,9 +9,9 @@ public class Day3
 {
     public static void main(String[] args)
     {
-        D3Part1 p1 = new D3Part1(Util.getFile("day3.txt"));
+        D3Part1 p1 = new D3Part1(Util.getFile("inputs/day3.txt"));
         System.out.println(p1.solve());
-        D3Part2 p2 = new D3Part2(Util.getFile("day3.txt"));
+        D3Part2 p2 = new D3Part2(Util.getFile("inputs/day3.txt"));
         System.out.println(p2.solve());
     }
 

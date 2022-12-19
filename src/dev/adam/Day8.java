@@ -19,9 +19,9 @@ public class Day8
 
     public static void main(String[] args)
     {
-        day = new Day8(Util.getFile("day8.txt"));
+        day = new Day8(Util.getFile("inputs/day8.txt"));
         System.out.println(day.solve1());
-        day = new Day8(Util.getFile("day8.txt"));
+        day = new Day8(Util.getFile("inputs/day8.txt"));
         System.out.println(day.solve2());
     }
 

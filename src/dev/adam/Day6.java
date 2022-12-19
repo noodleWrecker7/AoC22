@@ -17,9 +17,9 @@ public class Day6
 
     public static void main(String[] args)
     {
-        day = new Day6(Util.getFile("day6.txt"));
+        day = new Day6(Util.getFile("inputs/day6.txt"));
         System.out.println(day.solve1(4));
-        day = new Day6(Util.getFile("day6.txt"));
+        day = new Day6(Util.getFile("inputs/day6.txt"));
         System.out.println(day.solve2());
     }
 

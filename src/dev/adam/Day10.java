@@ -15,7 +15,7 @@ public class Day10 {
     static Day10 day;
 
     public static void main(String[] args) {
-        String inputFile = "day10.txt";
+        String inputFile = "inputs/day10.txt";
         day = new Day10(Util.getFile(inputFile));
         System.out.println(day.solve1());
         day = new Day10(Util.getFile(inputFile));

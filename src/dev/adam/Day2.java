@@ -7,9 +7,9 @@ public class Day2
 {
     public static void main(String[] args)
     {
-        D2Part1 p1 = new D2Part1(Util.getFile("day2.txt"));
+        D2Part1 p1 = new D2Part1(Util.getFile("inputs/day2.txt"));
         System.out.println(p1.solve());
-        D2Part2 p2 = new D2Part2(Util.getFile("day2.txt"));
+        D2Part2 p2 = new D2Part2(Util.getFile("inputs/day2.txt"));
         System.out.println(p2.solve());
     }
 

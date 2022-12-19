@@ -8,11 +8,9 @@ public class Day1
     public static void main(String[] args)
     {
 
-        String john = "";
-        john.compareTo("");
-        D1Part1 p1 = new D1Part1(Util.getFile("day1.txt"));
+        D1Part1 p1 = new D1Part1(Util.getFile("inputs/day1.txt"));
         System.out.println(p1.solve());
-        D1Part2 p2 = new D1Part2(Util.getFile("day1.txt"));
+        D1Part2 p2 = new D1Part2(Util.getFile("inputs/day1.txt"));
         System.out.println(p2.solve());
     }
 
