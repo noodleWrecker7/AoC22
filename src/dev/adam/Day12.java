@@ -16,6 +16,7 @@ public class Day12 {
     HashMap<String, String> previousNode;
     ArrayList<String> visited;
     ArrayList<String> queue;
+
     public Day12(BufferedReader fr) {
         this.fr = fr;
     }
@@ -37,24 +38,30 @@ public class Day12 {
                 char height = split[i].charAt(0);
                 if (height == 'S') {
                     height = 'a';
-                    startX = j;
-                    startY = i;
+                    startX = i;
+                    startY = j;
                 }
 
                 if (height == 'E') {
                     height = 'z';
-                    endX = j;
-                    endY = i;
+                    endX = i;
+                    endY = j;
                 }
-                map[j][i] = height;
+                map[i][j] = height;
             }
         }
     }
 
     public long solve1() {
         try {
-            String input = Files.readString(Path.of("inputs/day11.txt"));
+            visited = new ArrayList<>();
+            queue = new ArrayList<>();
+            previousNode = new HashMap<>();
+            weightToNode = new HashMap<>();
+            String input = Files.readString(Path.of("inputs/day12.txt"));
             genMap(input);
+
+            return findPathLength(startX, startY, endX, endY, true);
 
 
         } catch (Exception e) {
@@ -63,11 +70,79 @@ public class Day12 {
         return 0;
     }
 
+    public void insertToQueue(String coords) {
+        if (visited.contains(coords) || queue.contains(coords)) {
+            return;
+        }
+        for (int i = 0; i < queue.size(); i++) {
+            if (weightToNode.get(coords) < weightToNode.get(queue.get(i))) {
+                queue.add(i, coords);
+                return;
+            }
+        }
+        queue.add(coords);
+    }
+
+    public int findPathLength(int fromX, int fromY, int toX, int toY, boolean asc) {
+        System.out.println("searching from: " + fromX + "," + fromY + "  to: " + toX + "," + toY);
+        queue.add(fromX + "," + fromY);
+        weightToNode.put(fromX + "," + fromY, 0);
+
+
+        while (!queue.isEmpty()) {
+            String checking = queue.remove(0);
+            visited.add(checking);
+            System.out.println("checking: " + checking);
+            if ((checking.equals(toX + "," + toY) && asc) ||
+                    (!asc && map[Integer.parseInt(checking.split(",")[0])][Integer.parseInt(checking.split(",")[1])] == 'a')) {
+                System.out.println("found end");
+                return weightToNode.get(checking);
+            }
+            int checkX = Integer.parseInt(checking.split(",")[0]);
+            int checkY = Integer.parseInt(checking.split(",")[1]);
+
+
+            for (int x = -1; x <= 1; x++) {
+                for (int y = -1; y <= 1; y++) {
+                    if (x == 0 && y == 0 || Math.abs(x) == 1 && Math.abs(y) == 1) {
+                        continue;
+                    }
+                    try {
+                        // if neighbours valid step add to queue
+                        int gap = map[checkX + x][checkY + y] - map[checkX][checkY];
+                        if ((gap <= 1 && asc) || (gap >= -1 && !asc)) {
+                            // if this route is quicker than current route so far
+                            String nextNode = (checkX + x) + "," + (checkY + y);
+                            if (visited.contains(nextNode)) {
+                                continue;
+                            }
+                            if (weightToNode.get(nextNode) == null || weightToNode.get(nextNode) > weightToNode.get(checking) + 1) {
+                                previousNode.put(nextNode, checking);
+                                weightToNode.put(nextNode, weightToNode.get(checking) + 1);
+                                insertToQueue(nextNode);
+                            }
+                        }
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("index oob");
+                    }
+                }
+            }
+
+        }
+        return 0;
+    }
+
     public long solve2() {
         try {
-            String input = Files.readString(Path.of("inputs/day11.txt"));
+            visited = new ArrayList<>();
+            queue = new ArrayList<>();
+            previousNode = new HashMap<>();
+            weightToNode = new HashMap<>();
+            String input = Files.readString(Path.of("inputs/day12.txt"));
+            genMap(input);
 
-            String[] lines = input.split("\n");
+            return findPathLength(endX, endY, -1, -1, false);
+
 
         } catch (Exception e) {
             e.printStackTrace();
